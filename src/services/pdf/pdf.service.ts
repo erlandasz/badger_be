@@ -2,13 +2,25 @@ import { Injectable, Logger } from '@nestjs/common';
 
 import { PdfRepository } from '@models';
 import { PdfNotFoundError } from '@errors';
+import { PdfGeneratorService } from '@utils';
 import type { ICreatePdfInput } from '../../models/pdf/pdf.schema';
 
 @Injectable()
 export class PdfService {
     private readonly logger = new Logger(PdfService.name);
 
-    constructor(private readonly pdfRepository: PdfRepository) {}
+    constructor(
+        private readonly pdfRepository: PdfRepository,
+        private readonly pdfGenerator: PdfGeneratorService,
+    ) {}
+
+    async generatePdf(id: string) {
+        const pdf = await this.findOne(id);
+
+        this.pdfGenerator.buildPdf(pdf.toObject());
+
+        return pdf;
+    }
 
     async create(data: ICreatePdfInput) {
         const pdf = await this.pdfRepository.createPdf(data);

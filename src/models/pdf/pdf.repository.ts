@@ -16,7 +16,7 @@ export class PdfRepository {
     }
 
     findOne(id: string) {
-        return this.pdfModel.findById(id).lean().exec();
+        return this.pdfModel.findById(id).exec();
     }
 
     update(id: string, input: any) {

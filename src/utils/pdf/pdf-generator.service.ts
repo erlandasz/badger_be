@@ -1,42 +1,49 @@
 import { Injectable } from '@nestjs/common';
 import JsPDF from 'jspdf';
 
+import { PdfDto } from '../../dto/pdf.dto';
+
 @Injectable()
 export class PdfGeneratorService {
-    constructor() {}
-
-    lol() {
-        const jsPdf = new JsPDF({
-            format: 'a6',
-            orientation: 'p',
-            unit: 'mm',
+    // eslint-disable-next-line class-methods-use-this
+    buildPdf(pdfDocument: PdfDto) {
+        const file = new JsPDF({
+            orientation: pdfDocument.orientation,
+            unit: pdfDocument.measurementUnit,
+            format: pdfDocument.format,
         });
 
-        const firstName = 'Erlandas';
-        const lastName = 'Zelvys';
-        const companyName = 'Sachs Associates';
-        const companyRole = 'IT Consultant';
+        const textLines = pdfDocument.text;
 
-        const roleColor = '#700dba';
+        textLines.forEach(line => {
+            const {
+                text,
+                fontSize,
+                color,
+                font,
+                maxHeight,
+                maxWidth,
+                posY,
+                align,
+            } = line;
 
-        // Calculate the center position for text
-        const centerText = (text, y) => {
-            const textWidth = jsPdf.getTextWidth(text);
-            return (jsPdf.internal.pageSize.getWidth() - textWidth) / 2;
-        };
+            file.setFontSize(fontSize);
+            file.setTextColor(color);
+            file.setFont(font);
 
-        jsPdf.text(firstName, centerText(firstName, 20), 20);
-        jsPdf.text(lastName, centerText(lastName, 30), 30);
-        jsPdf.text(companyName, centerText(companyName, 40), 40);
-        jsPdf.setTextColor(roleColor);
-        jsPdf.text(companyRole, centerText(companyRole, 50), 50);
+            const textWidth =
+                (file.getStringUnitWidth(text) * fontSize) /
+                file.internal.scaleFactor;
+            if (textWidth > maxWidth) {
+                const newFontSize = (maxWidth / textWidth) * fontSize;
+                file.setFontSize(newFontSize);
+            }
 
-        // Add a 1mm high line near the bottom, 10 times thicker, in roleColor
-        jsPdf.setDrawColor(roleColor);
-        jsPdf.setLineWidth(10); // Adjust line width as needed
-        const lineY = jsPdf.internal.pageSize.getHeight() - 20; // 1mm from the bottom
-        jsPdf.line(10, lineY, jsPdf.internal.pageSize.getWidth() - 10, lineY);
+            const xPos = (file.internal.pageSize.getWidth() - textWidth) / 2;
 
-        jsPdf.save('public/test.pdf');
+            file.text(text, xPos, posY, { maxWidth, align: 'justify' as any });
+        });
+
+        file.save(`public/${pdfDocument._id}.pdf`);
     }
 }

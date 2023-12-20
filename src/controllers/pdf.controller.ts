@@ -19,6 +19,11 @@ export class PdfController {
         return this.pdfService.findAll();
     }
 
+    @Post(':id/generate')
+    generate(@Param('id') id: string) {
+        return this.pdfService.generatePdf(id);
+    }
+
     @Get(':id')
     findOne(@Param('id') id: string) {
         return this.pdfService.findOne(id);
