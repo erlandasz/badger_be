@@ -1,0 +1,45 @@
+export enum PDF_FORMAT {
+    A0 = 'a0',
+    A1 = 'a1',
+    A2 = 'a2',
+    A3 = 'a3',
+    A4 = 'a4',
+    A5 = 'a5',
+    A6 = 'a6',
+    A7 = 'a7',
+    A8 = 'a8',
+    A9 = 'a9',
+    A10 = 'a10',
+    B0 = 'b0',
+    B1 = 'b1',
+    B2 = 'b2',
+    B3 = 'b3',
+    B4 = 'b4',
+    B5 = 'b5',
+    B6 = 'b6',
+    B7 = 'b7',
+    B8 = 'b8',
+    B9 = 'b9',
+    B10 = 'b10',
+    LEGAL = 'legal',
+    LETTER = 'letter',
+    DL = 'dl',
+    TABLOID = 'tabloid',
+    CREDIT_CARD = 'credit-card',
+    JUNIOR_LEGAL = 'junior-legal',
+    GOVERNMENT_LETTER = 'government-letter',
+    CUSTOM = 'custom',
+}
+
+export enum MEASUREMENT_UNIT {
+    INCHES = 'in',
+    CENTIMETERS = 'cm',
+    PIXELS = 'px',
+    POINTS = 'pt',
+    MILLIMETERS = 'mm',
+}
+
+export enum PDF_ORIENTATION {
+    PORTRAIT = 'portrait',
+    LANDSCAPE = 'landscape',
+}

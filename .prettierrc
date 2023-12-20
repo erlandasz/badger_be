@@ -1,0 +1,19 @@
+{
+  "singleQuote": true,
+  "trailingComma": "all",
+  "useTabs": false,
+  "tabWidth": 4,
+  "printWidth": 80,
+  "semi": true,
+  "arrowParens": "avoid",
+  "bracketSpacing": true,
+  "cursorOffset": -1,
+  "endOfLine": "lf",
+  "htmlWhitespaceSensitivity": "css",
+  "insertPragma": false,
+  "pluginSearchDirs": [],
+  "plugins": [],
+  "proseWrap": "preserve",
+  "quoteProps": "as-needed",
+  "requirePragma": false
+}
